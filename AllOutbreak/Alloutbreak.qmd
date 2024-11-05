@@ -1,0 +1,331 @@
+---
+title: "Outbreak"
+format: html
+editor: visual
+---
+
+## High
+
+```{r}
+library(readxl)
+data1 <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/allreport(dailyNumberReport)_high.xlsx")
+data1
+```
+
+```{r}
+data1$index <- seq_along(data1[[1]])
+```
+
+```{r}
+data1_long <- tidyr::gather(data1, key = "variable", value = "value", -index)
+```
+
+```{r}
+library(ggplot2)
+ggplot(data1_long, aes(x = index, y = value, color = variable)) +
+  geom_line(show.legend = FALSE) +
+  labs(x = "Days", y = "Frequently", title = "Rabies High") +
+  theme(plot.title = element_text(hjust = 0.5)) 
+```
+
+```{r}
+# Install dan memuat paket yang diperlukan
+#install.packages("openxlsx")
+library(openxlsx)
+```
+
+```{r}
+ # Inisialisasi objek workbook untuk menulis data
+wb <- createWorkbook()
+
+# Tambahkan satu lembar kerja baru ke dalam workbook
+addWorksheet(wb, "Data_Puncak_High")
+
+# Loop melalui setiap kolom
+for (i in seq_along(data1)) {
+  
+# Mendapatkan nama kolom
+  nama_kolom <- names(data1)[i]
+  
+# Mendapatkan data dalam kolom
+  data_kolom <- data1[[i]]
+  
+# Cek apakah data_kolom merupakan numerik
+  if (is.numeric(data_kolom)) {
+    
+# Cari puncak
+    puncak <- which.max(data_kolom)
+    
+# Ambil data dari awal hingga puncak
+    data_hasil <- data_kolom[1:puncak]
+    
+# Tulis data hasil pemrosesan ke dalam lembar kerja baru
+    writeData(wb, sheet = "Data_Puncak_High", x = data_hasil, startCol = i, startRow = 1)
+  } else {
+    
+# Jika kolom tidak numerik, lakukan sesuatu sesuai kebutuhan Anda
+    print(paste("Kolom", nama_kolom, "tidak numerik"))
+  }
+}
+
+# Simpan workbook ke dalam satu file Excel
+saveWorkbook(wb, "Data_Puncak_High.xlsx")
+```
+
+## Middle
+
+```{r}
+library(readxl)
+data2 <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/allreport(dailyNumberReport)_middle.xlsx")
+data2
+```
+
+```{r}
+data2$index <- seq_along(data2[[1]])
+```
+
+```{r}
+data2_long <- tidyr::gather(data2, key = "variable", value = "value", -index)
+```
+
+```{r}
+library(ggplot2)
+ggplot(data2_long, aes(x = index, y = value, color = variable)) +
+  geom_line(show.legend = FALSE) +
+  labs(x = "Days", y = "Frequently", title = "Rabies Middle") +
+  theme(plot.title = element_text(hjust = 0.5)) 
+```
+
+```{r}
+ # Inisialisasi objek workbook untuk menulis data
+wb <- createWorkbook()
+
+# Tambahkan satu lembar kerja baru ke dalam workbook
+addWorksheet(wb, "Data_Puncak_Middle")
+
+# Loop melalui setiap kolom
+for (i in seq_along(data2)) {
+  
+# Mendapatkan nama kolom
+  nama_kolom <- names(data2)[i]
+  
+# Mendapatkan data dalam kolom
+  data_kolom <- data2[[i]]
+  
+# Cek apakah data_kolom merupakan numerik
+  if (is.numeric(data_kolom)) {
+    
+# Cari puncak
+    puncak <- which.max(data_kolom)
+    
+# Ambil data dari awal hingga puncak
+    data_hasil <- data_kolom[1:puncak]
+    
+# Tulis data hasil pemrosesan ke dalam lembar kerja baru
+    writeData(wb, sheet = "Data_Puncak_Middle", x = data_hasil, startCol = i, startRow = 1)
+  } else {
+    
+# Jika kolom tidak numerik, lakukan sesuatu sesuai kebutuhan Anda
+    print(paste("Kolom", nama_kolom, "tidak numerik"))
+  }
+}
+
+# Simpan workbook ke dalam satu file Excel
+saveWorkbook(wb, "Data_Puncak_Middle.xlsx")
+```
+
+## Low
+
+```{r}
+library(readxl)
+data3 <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/allreport(dailyNumberReport)_low.xlsx")
+data3
+```
+
+```{r}
+data3$index <- seq_along(data3[[1]])
+```
+
+```{r}
+data3_long <- tidyr::gather(data3, key = "variable", value = "value", -index)
+```
+
+```{r}
+library(ggplot2)
+ggplot(data3_long, aes(x = index, y = value, color = variable)) +
+  geom_line(show.legend = FALSE) +
+  labs(x = "Days", y = "Frequently", title = "Rabies Low") +
+  theme(plot.title = element_text(hjust = 0.5)) 
+```
+
+```{r}
+ # Inisialisasi objek workbook untuk menulis data
+wb <- createWorkbook()
+
+# Tambahkan satu lembar kerja baru ke dalam workbook
+addWorksheet(wb, "Data_Puncak_Low")
+
+# Loop melalui setiap kolom
+for (i in seq_along(data3)) {
+  
+# Mendapatkan nama kolom
+  nama_kolom <- names(data3)[i]
+  
+# Mendapatkan data dalam kolom
+  data_kolom <- data3[[i]]
+  
+# Cek apakah data_kolom merupakan numerik
+  if (is.numeric(data_kolom)) {
+    
+# Cari puncak
+    puncak <- which.max(data_kolom)
+    
+# Ambil data dari awal hingga puncak
+    data_hasil <- data_kolom[1:puncak]
+    
+# Tulis data hasil pemrosesan ke dalam lembar kerja baru
+    writeData(wb, sheet = "Data_Puncak_Low", x = data_hasil, startCol = i, startRow = 1)
+  } else {
+    
+# Jika kolom tidak numerik, lakukan sesuatu sesuai kebutuhan Anda
+    print(paste("Kolom", nama_kolom, "tidak numerik"))
+  }
+}
+
+# Simpan workbook ke dalam satu file Excel
+saveWorkbook(wb, "Data_Puncak_Low.xlsx")
+```
+
+
+
+## Additional 1
+
+```{r}
+library(readxl)
+data4 <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/allreport(dailyNumberReport)_add1.xlsx")
+data4
+```
+
+```{r}
+data4$index <- seq_along(data4[[1]])
+```
+
+```{r}
+data4_long <- tidyr::gather(data4, key = "variable", value = "value", -index)
+```
+
+```{r}
+library(ggplot2)
+ggplot(data4_long, aes(x = index, y = value, color = variable)) +
+  geom_line(show.legend = FALSE) +
+  labs(x = "Days", y = "Frequently", title = "Rabies Low") +
+  theme(plot.title = element_text(hjust = 0.5)) 
+```
+
+```{r}
+ # Inisialisasi objek workbook untuk menulis data
+wb <- createWorkbook()
+
+# Tambahkan satu lembar kerja baru ke dalam workbook
+addWorksheet(wb, "Data_Puncak_Add1")
+
+# Loop melalui setiap kolom
+for (i in seq_along(data4)) {
+  
+# Mendapatkan nama kolom
+  nama_kolom <- names(data4)[i]
+  
+# Mendapatkan data dalam kolom
+  data_kolom <- data4[[i]]
+  
+# Cek apakah data_kolom merupakan numerik
+  if (is.numeric(data_kolom)) {
+    
+# Cari puncak
+    puncak <- which.max(data_kolom)
+    
+# Ambil data dari awal hingga puncak
+    data_hasil <- data_kolom[1:puncak]
+    
+# Tulis data hasil pemrosesan ke dalam lembar kerja baru
+    writeData(wb, sheet = "Data_Puncak_Add1", x = data_hasil, startCol = i, startRow = 1)
+  } else {
+    
+# Jika kolom tidak numerik, lakukan sesuatu sesuai kebutuhan Anda
+    print(paste("Kolom", nama_kolom, "tidak numerik"))
+  }
+}
+
+# Simpan workbook ke dalam satu file Excel
+saveWorkbook(wb, "Data_Puncak_Add1.xlsx")
+```
+
+
+
+## Additional 2
+
+```{r}
+library(readxl)
+data5 <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/allreport(dailyNumberReport)_add2.xlsx")
+data5
+```
+
+```{r}
+data5$index <- seq_along(data5[[1]])
+```
+
+```{r}
+data5_long <- tidyr::gather(data5, key = "variable", value = "value", -index)
+```
+
+```{r}
+library(ggplot2)
+ggplot(data5_long, aes(x = index, y = value, color = variable)) +
+  geom_line(show.legend = FALSE) +
+  labs(x = "Days", y = "Frequently", title = "Rabies Low") +
+  theme(plot.title = element_text(hjust = 0.5)) 
+```
+
+```{r}
+ # Inisialisasi objek workbook untuk menulis data
+wb <- createWorkbook()
+
+# Tambahkan satu lembar kerja baru ke dalam workbook
+addWorksheet(wb, "Data_Puncak_Add2")
+
+# Loop melalui setiap kolom
+for (i in seq_along(data5)) {
+  
+# Mendapatkan nama kolom
+  nama_kolom <- names(data5)[i]
+  
+# Mendapatkan data dalam kolom
+  data_kolom <- data5[[i]]
+  
+# Cek apakah data_kolom merupakan numerik
+  if (is.numeric(data_kolom)) {
+    
+# Cari puncak
+    puncak <- which.max(data_kolom)
+    
+# Ambil data dari awal hingga puncak
+    data_hasil <- data_kolom[1:puncak]
+    
+# Tulis data hasil pemrosesan ke dalam lembar kerja baru
+    writeData(wb, sheet = "Data_Puncak_Add2", x = data_hasil, startCol = i, startRow = 1)
+  } else {
+    
+# Jika kolom tidak numerik, lakukan sesuatu sesuai kebutuhan Anda
+    print(paste("Kolom", nama_kolom, "tidak numerik"))
+  }
+}
+
+# Simpan workbook ke dalam satu file Excel
+saveWorkbook(wb, "Data_Puncak_Add2.xlsx")
+```
+
+
+
+
+
+

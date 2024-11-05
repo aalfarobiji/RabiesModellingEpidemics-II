@@ -1,0 +1,339 @@
+---
+title: "R0 Rabies"
+format: html
+editor: visual
+---
+
+## High
+
+```{r}
+library(readxl)
+primercaseH <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/Data_Puncak_High.xlsx")
+primercaseH
+```
+
+```{r}
+# making each coloumn as a list
+primercaseHl <- list()
+for (i in 1:100) {
+  primercaseHl[[i]] <- primercaseH[,i]
+}
+length(primercaseHl)
+```
+
+```{r}
+seccaseH <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/allreport(nb_secCases)_high.xlsx")
+seccaseH
+```
+
+```{r}
+# making each coloumn as a list
+seccaseHl <- list()
+for (i in seq(1, 200, by = 2)) {
+  seccaseHl[[length(seccaseHl) + 1]] <- seccaseH[, i:(i+1)]
+}
+length(seccaseHl)
+```
+
+```{r}
+# Function to calculate R0 for a pair of primercase and seccase
+calculate_R0H <- function(primercaseH, seccaseH) {
+  primercaseH <- na.omit(primercaseH)
+  seccaseH <- na.omit(seccaseH)
+  seccaseH <- seccaseH[order(seccaseH[[1]]), ]
+  
+  baris_terpilih <- max((1:nrow(seccaseH))[seccaseH[, 1] == nrow(primercaseH)])
+  r0 <- sum(seccaseH[1:baris_terpilih, 2]) / sum(primercaseH)
+  
+  return(r0)
+}
+
+# Calculate R0 for each pair of primercase2 and seccase2
+R0_valuesH <- unlist(lapply(1:100, function(i) {
+  calculate_R0H(primercaseHl[[i]], seccaseHl[[i]])
+}))
+
+R0_valuesH
+```
+
+```{r}
+mean(R0_valuesH) 
+```
+
+```{r}
+hist(R0_valuesH)
+```
+
+## Middle
+
+```{r}
+library(readxl)
+primercaseM <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/Data_Puncak_Middle.xlsx")
+primercaseM
+```
+
+```{r}
+# making each coloumn as a list
+primercaseMl <- list()
+for (i in 1:100) {
+  primercaseMl[[i]] <- primercaseM[,i]
+}
+length(primercaseMl)
+```
+
+```{r}
+seccaseM <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/allreport(nb_secCases)_middle.xlsx")
+seccaseM
+```
+
+```{r}
+# making each coloumn as a list
+seccaseMl <- list()
+for (i in seq(1, 200, by = 2)) {
+  seccaseMl[[length(seccaseMl) + 1]] <- seccaseM[, i:(i+1)]
+}
+length(seccaseMl)
+```
+
+```{r}
+# Function to calculate R0 for a pair of primercase and seccase
+calculate_R0M <- function(primercaseM, seccaseM) {
+  primercaseM <- na.omit(primercaseM)
+  seccaseM <- na.omit(seccaseM)
+  seccaseM <- seccaseM[order(seccaseM[[1]]), ]
+  
+# Menemukan puncak di primercaseKS
+  peak_value <- max(primercaseM)
+  peak_index <- which(primercaseM == peak_value)
+  
+# Menemukan baris terpilih di seccaseKS berdasarkan puncak di primercaseKS 
+  baris_terpilih <- max((1:nrow(seccaseM))[seccaseM[, 1] == peak_index])
+  
+# Menghitung nilai R0
+  r0 <- sum(seccaseM[1:baris_terpilih, 2]) / sum(primercaseM)
+  
+  return(r0)
+}
+
+# Calculate R0 for each pair of primercase2 and seccase2
+R0_valuesM <- unlist(lapply(1:50, function(i) {
+  calculate_R0M(primercaseMl[[i]], seccaseMl[[i]])
+}))
+
+R0_valuesM
+```
+
+```{r}
+mean(R0_valuesM)
+```
+
+```{r}
+hist(R0_valuesM)
+```
+
+## Low
+
+```{r}
+library(readxl)
+primercaseL <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/Data_Puncak_Low.xlsx")
+primercaseL
+```
+
+```{r}
+# making each coloumn as a list
+primercaseLl <- list()
+for (i in 1:100) {
+  primercaseLl[[i]] <- primercaseL[,i]
+}
+length(primercaseLl)
+```
+
+```{r}
+seccaseL <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/allreport(nb_secCases)_low.xlsx")
+seccaseL
+```
+
+```{r}
+# making each coloumn as a list
+seccaseLl <- list()
+for (i in seq(1, 200, by = 2)) {
+  seccaseLl[[length(seccaseLl) + 1]] <- seccaseL[, i:(i+1)]
+}
+length(seccaseLl)
+```
+
+```{r}
+# Function to calculate R0 for a pair of primercase and seccase
+calculate_R0L <- function(primercaseL, seccaseL) {
+  primercaseL <- na.omit(primercaseL)
+  seccaseL <- na.omit(seccaseL)
+  seccaseL <- seccaseL[order(seccaseL[[1]]), ]
+  
+# Menemukan puncak di primercaseKS
+  peak_value <- max(primercaseL)
+  peak_index <- which(primercaseL == peak_value)
+  
+# Menemukan baris terpilih di seccaseKS berdasarkan puncak di primercaseKS 
+  baris_terpilih <- max((1:nrow(seccaseL))[seccaseL[, 1] == peak_index])
+  
+# Menghitung nilai R0
+  r0 <- sum(seccaseL[1:baris_terpilih, 2]) / sum(primercaseL)
+  
+  return(r0)
+}
+
+# Calculate R0 for each pair of primercase2 and seccase2
+R0_valuesL <- unlist(lapply(1:100, function(i) {
+  calculate_R0L(primercaseLl[[i]], seccaseLl[[i]])
+}))
+
+R0_valuesL
+```
+
+```{r}
+mean(R0_valuesL)
+```
+
+```{r}
+hist(R0_valuesL)
+```
+
+## Additional 1
+
+```{r}
+library(readxl)
+primercaseA1 <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/Data_Puncak_Add1.xlsx")
+primercaseA1
+```
+
+```{r}
+# making each coloumn as a list
+primercaseA1l <- list()
+for (i in 1:100) {
+  primercaseA1l[[i]] <- primercaseA1[,i]
+}
+length(primercaseA1l)
+```
+
+```{r}
+seccaseA1 <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/allreport(nb_secCases)_add1.xlsx")
+seccaseA1
+```
+
+```{r}
+# making each coloumn as a list
+seccaseA1l <- list()
+for (i in seq(1, 200, by = 2)) {
+  seccaseA1l[[length(seccaseA1l) + 1]] <- seccaseA1[, i:(i+1)]
+}
+length(seccaseA1l)
+```
+
+```{r}
+# Function to calculate R0 for a pair of primercase and seccase
+calculate_R0A1 <- function(primercaseA1, seccaseA1) {
+  primercaseA1 <- na.omit(primercaseA1)
+  seccaseA1 <- na.omit(seccaseA1)
+  seccaseA1 <- seccaseA1[order(seccaseA1[[1]]), ]
+  
+# Menemukan puncak di primercaseKS
+  peak_value <- max(primercaseA1)
+  peak_index <- which(primercaseA1 == peak_value)
+  
+# Menemukan baris terpilih di seccaseKS berdasarkan puncak di primercaseKS 
+  baris_terpilih <- max((1:nrow(seccaseA1))[seccaseA1[, 1] == peak_index])
+  
+# Menghitung nilai R0
+  r0 <- sum(seccaseA1[1:baris_terpilih, 2]) / sum(primercaseA1)
+  
+  return(r0)
+}
+
+# Calculate R0 for each pair of primercase2 and seccase2
+R0_valuesA1 <- unlist(lapply(1:100, function(i) {
+  calculate_R0A1(primercaseA1l[[i]], seccaseA1l[[i]])
+}))
+
+R0_valuesA1
+```
+
+```{r}
+mean(R0_valuesA1)
+```
+
+```{r}
+hist(R0_valuesA1)
+```
+
+## Additional 2
+
+```{r}
+library(readxl)
+primercaseA2 <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/Data_Puncak_Add2.xlsx")
+primercaseA2
+```
+
+```{r}
+# making each coloumn as a list
+primercaseA2l <- list()
+for (i in 1:100) {
+  primercaseA2l[[i]] <- primercaseA2[,i]
+}
+length(primercaseA2l)
+```
+
+```{r}
+seccaseA2 <- read_excel("D:/Kuliah/ResearchPractice/Model/AllOutbreak/Fatukopa/allreport(nb_secCases)_add2.xlsx")
+seccaseA2
+```
+
+```{r}
+# making each coloumn as a list
+seccaseA2l <- list()
+for (i in seq(1, 200, by = 2)) {
+  seccaseA2l[[length(seccaseA2l) + 1]] <- seccaseA2[, i:(i+1)]
+}
+length(seccaseA2l)
+```
+
+```{r}
+# Function to calculate R0 for a pair of primercase and seccase
+calculate_R0A2 <- function(primercaseA2, seccaseA2) {
+  primercaseA2 <- na.omit(primercaseA2)
+  seccaseA2 <- na.omit(seccaseA2)
+  seccaseA2 <- seccaseA2[order(seccaseA2[[1]]), ]
+  
+# Menemukan puncak di primercaseKS
+  peak_value <- max(primercaseA2)
+  peak_index <- which(primercaseA2 == peak_value)
+  
+# Menemukan baris terpilih di seccaseKS berdasarkan puncak di primercaseKS 
+  baris_terpilih <- max((1:nrow(seccaseA2))[seccaseA2[, 1] == peak_index])
+  
+# Menghitung nilai R0
+  r0 <- sum(seccaseA2[1:baris_terpilih, 2]) / sum(primercaseA2)
+  
+  return(r0)
+}
+
+# Calculate R0 for each pair of primercase2 and seccase2
+R0_valuesA2 <- unlist(lapply(1:100, function(i) {
+  calculate_R0A2(primercaseA2l[[i]], seccaseA2l[[i]])
+}))
+
+R0_valuesA2
+```
+
+```{r}
+mean(R0_valuesA2)
+```
+
+```{r}
+hist(R0_valuesA2)
+```
+
+## Combination
+
+```{r}
+boxplot(R0_valuesH, R0_valuesM, R0_valuesL, R0_valuesA1, R0_valuesA2, main = "R0", ylab = "R0", names = c("High", "Middle", "Low", "Add1", "Add2"))
+```
